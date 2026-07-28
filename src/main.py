@@ -1,6 +1,6 @@
 def main():
 
-    lst = []
+    
     counter = 1
     
     show_menu()
@@ -9,20 +9,31 @@ def main():
         command = input('Выберите нужный пункт: ')
 
         if command == '1':
-            question = input('Напишите название аниме: ')
-            lst.append(f'{counter}. {question}')
-            counter += 1
-            print()
+            add_anime()
             show_menu()
 
         if command == '2':
-            print(lst)
+            show_anime()
             print()
             show_menu()
+            
 
         if command == '3':
             print('Выход из программы прошел успешно!')
             break
+
+def add_anime():
+    anime_name = input('Введите название аниме: ')
+    with open('anime_list.txt', 'a', encoding='utf-8') as file:
+        file.write(f'{anime_name}' + '\n')    
+    print('Сохранение прошло успешно!')
+
+def show_anime():
+    with open('anime_list.txt', 'r', encoding='utf-8') as file:
+        print('Мой список аниме!')
+        for line in file:
+            if line:
+                print(line.strip())
 
 
 def show_menu():
@@ -33,8 +44,6 @@ def show_menu():
     print('3. Выход')
     print('----------')
     print()
-
-    
 
 if __name__ == '__main__':
     main()
