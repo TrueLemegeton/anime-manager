@@ -1,8 +1,4 @@
 def main():
-
-    
-    counter = 1
-    
     show_menu()
 
     while True:
@@ -12,13 +8,17 @@ def main():
             add_anime()
             show_menu()
 
-        if command == '2':
+        elif command == '2':
+            delete_anime()
+            print()
+            show_menu()
+
+        elif command == '3':
             show_anime()
             print()
             show_menu()
             
-
-        if command == '3':
+        elif command == '4':
             print('Выход из программы прошел успешно!')
             break
 
@@ -30,18 +30,31 @@ def add_anime():
 
 def show_anime():
     with open('anime_list.txt', 'r', encoding='utf-8') as file:
+
         print('Мой список аниме!')
         for line in file:
             if line:
                 print(line.strip())
 
+def delete_anime():
+    anime_to_delete = input('Введите название аниме, которое хотите удалить: ')
+
+    with open ('anime_list.txt', 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+
+
+    with open('anime_list.txt', 'w', encoding='utf-8') as file:
+        for line in lines:
+            if anime_to_delete.lower() != line.strip().lower():
+                file.write(line)
 
 def show_menu():
     print('----------')
     print('Меню: ')
     print('1. Добавить')
-    print('2. Посмотреть')
-    print('3. Выход')
+    print('2. Удалить')
+    print('3. Посмотреть')
+    print('4. Выход')
     print('----------')
     print()
 
