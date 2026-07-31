@@ -1,3 +1,5 @@
+import json
+
 def main():
     show_menu()
 
@@ -14,7 +16,7 @@ def main():
             show_menu()
 
         elif command == '3':
-            replace_title()
+            edit_anime()
             print()
             show_menu()
 
@@ -28,52 +30,88 @@ def main():
             break
 
 def add_anime():
-    anime_name = input('Введите название аниме: ')
-    with open('anime_list.txt', 'a', encoding='utf-8') as file:
-        file.write(f'{anime_name}' + '\n')    
-    print('Сохранение прошло успешно!')
+
+    anime = {}
+    anime['title'] = input('Введите название аниме: ')
+    anime['personal_rating'] = float(input('Как вы оцениваете это аниме: '))
+    anime['status'] = input('Статус: ')
+    anime['review'] = input('Комментарий: ')
+
+
+    with open('anime.json', mode='r', encoding='utf-8') as file:
+        anime_list = json.load(file)
+
+    anime_list.append(anime)
+
+    with open('anime.json', mode='w', encoding='utf-8') as file:
+        json.dump(anime_list, file, ensure_ascii=False, indent=2)
+
+    print('Добавление произошло успешно!')
+
 
 def show_anime():
-    with open('anime_list.txt', 'r', encoding='utf-8') as file:
+    with open('anime.json', mode='r', encoding='utf-8') as file:
+        inf = json.load(file)
 
-        print('Мой список аниме!')
-        for line in file:
-            if line:
-                print(line.strip())
+    print('-----------')
+    for anime in inf:
+        print(f'Название: {anime['title']}')
+        print(f'Личная оценка: {anime['personal_rating']}')
+        print(f'Статус: {anime['status']}')
+        print(f'Комментарий: {anime['review']}')
+        print('-----------')
+
+    
 
 def delete_anime():
     anime_to_delete = input('Введите название аниме, которое хотите удалить: ')
 
-    with open ('anime_list.txt', 'r', encoding='utf-8') as file:
-        lines = file.readlines()
+    with open ('anime.json', 'r', encoding='utf-8') as file:
+        anime_list = json.load(file)
+
+    anime_list = [anime for anime in anime_list if anime['title'].lower() != anime_to_delete.lower()]
+
+    with open ('anime.json', 'w', encoding='utf-8') as file:
+        json.dump(anime_list, file, ensure_ascii=False, indent=2)
+
+    print('Удаление произошло успешно!')
 
 
-    with open('anime_list.txt', 'w', encoding='utf-8') as file:
-        for line in lines:
-            if anime_to_delete.lower() != line.strip().lower():
-                file.write(line)
+def edit_anime():
 
-def replace_title():
+    anime_to_edit = input('Какое аниме желаете изменить: ')
 
-    title_to_replace = input('Введите название аниме, которое хотите заменить: ')
-    new_title = input('Введите новое название аниме: ')
+    with open('anime.json', mode='r', encoding='utf-8') as file:
+        anime_list = json.load(file)
 
-    with open('anime_list.txt', 'r', encoding='utf-8') as file:
-        lines = file.readlines()
+    for anime in anime_list:
+        if anime['title'].lower() == anime_to_edit.lower():
+            print('1. Название')
+            print('2. Оценку')
+            print('3. Статус')
+            print('4. Комментарий')
+            choice = input('Что изменить: ')
 
-    updated_lines = []
 
-    for line in lines:
-        if title_to_replace.lower() == line.strip().lower():
-            updated_lines.append(f'{new_title}{'\n'}')
-        else:
-            updated_lines.append(line)
- 
-    with open('anime_list.txt', 'w', encoding='utf-8') as file:
-        for line in updated_lines:
-            file.write(line)
+            if choice == '1':
+                new_title = input('Новое название: ')
+                anime['title'] = new_title
+            if choice == '2':
+                new_rating = float(input('Новая оценка: '))
+                anime['personal_rating'] = new_rating
+            if choice == '3':
+                new_status = input('Новый статус: ')
+                anime['status'] = new_status
+            if choice == '4':
+                new_review = input('Новый комментарий: ')
+                anime['review'] = new_review
+    
 
-    print('Изменение произошло успешно!')
+    with open('anime.json', mode='w', encoding='utf-8') as file:
+        json.dump(anime_list, file, ensure_ascii=False, indent=2)
+
+    
+
 
 def show_menu():
     print('----------')
