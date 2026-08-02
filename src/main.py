@@ -16,16 +16,21 @@ def main():
             show_menu()
 
         elif command == '3':
-            edit_anime()
+            search_anime()
             print()
             show_menu()
 
         elif command == '4':
+            edit_anime()
+            print()
+            show_menu()
+
+        elif command == '5':
             show_anime()
             print()
             show_menu()
             
-        elif command == '5':
+        elif command == '6':
             print('Выход из программы прошел успешно!')
             break
 
@@ -110,7 +115,27 @@ def edit_anime():
     with open('anime.json', mode='w', encoding='utf-8') as file:
         json.dump(anime_list, file, ensure_ascii=False, indent=2)
 
-    
+def search_anime():
+    search_title = input('Введите название аниме, которое хотите найти: ')
+
+    with open('anime.json', mode='r', encoding='utf-8') as file:
+        anime_list = json.load(file)
+
+    flag = False
+
+    for anime in anime_list:
+        if anime['title'].lower() == search_title.lower():
+            flag = True
+            print('-----------')
+            print(f'Название: {anime["title"]}')
+            print(f'Личная оценка: {anime["personal_rating"]}')
+            print(f'Статус: {anime["status"]}')
+            print(f'Комментарий: {anime["review"]}')
+            print('-----------')
+        break
+
+    if not flag:
+        print('Аниме с таким названием не найдено!')
 
 
 def show_menu():
@@ -118,9 +143,10 @@ def show_menu():
     print('Меню: ')
     print('1. Добавить')
     print('2. Удалить')
-    print('3. Изменить')
-    print('4. Посмотреть')
-    print('5. Выход')
+    print('3. Поиск')
+    print('4. Изменить')
+    print('5. Посмотреть')
+    print('6. Выход')
     print('----------')
     print()
 
