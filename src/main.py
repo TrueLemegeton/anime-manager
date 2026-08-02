@@ -21,16 +21,21 @@ def main():
             show_menu()
 
         elif command == '4':
-            edit_anime()
+            sorting_anime()
             print()
             show_menu()
 
         elif command == '5':
+            edit_anime()
+            print()
+            show_menu()
+
+        elif command == '6':
             show_anime()
             print()
             show_menu()
             
-        elif command == '6':
+        elif command == '7':
             print('Выход из программы прошел успешно!')
             break
 
@@ -137,6 +142,34 @@ def search_anime():
     if not flag:
         print('Аниме с таким названием не найдено!')
 
+def sorting_anime():
+    with open('anime.json', mode='r', encoding='utf-8') as file:
+        anime_list = json.load(file)
+
+    print('1. Название')
+    print('2. Личная оценка')
+    print('3. Статус')
+    choice = input('По какому критерию сортировать: ')
+
+    if choice == '1':
+        sorted_list = sorted(anime_list, key=lambda x: x['title'])
+    elif choice == '2':
+        sorted_list = sorted(anime_list, key=lambda x: x['personal_rating'], reverse=True)
+    elif choice == '3':
+        sorted_list = sorted(anime_list, key=lambda x: x['status'])
+    else:
+        print('Некорретный выбор критерия сортировки.')
+        return
+
+    for anime in sorted_list:
+        print('-----------')
+        print(f'Название: {anime["title"]}')
+        print(f'Личная оценка: {anime["personal_rating"]}')
+        print(f'Статус: {anime["status"]}')
+        print(f'Комментарий: {anime["review"]}')
+        print('-----------')
+
+    print('Сортировка прошла успешно!')
 
 def show_menu():
     print('----------')
@@ -144,9 +177,10 @@ def show_menu():
     print('1. Добавить')
     print('2. Удалить')
     print('3. Поиск')
-    print('4. Изменить')
-    print('5. Посмотреть')
-    print('6. Выход')
+    print('4. Сортировка')
+    print('5. Изменить')
+    print('6. Посмотреть')
+    print('7. Выход')
     print('----------')
     print()
 
