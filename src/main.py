@@ -25,17 +25,22 @@ def main():
             print()
             show_menu()
 
-        elif command == '5':
-            edit_anime()
+        if command == '5':
+            filter_anime()
             print()
             show_menu()
 
         elif command == '6':
+            edit_anime()
+            print()
+            show_menu()
+
+        elif command == '7':
             show_anime()
             print()
             show_menu()
             
-        elif command == '7':
+        elif command == '8':
             print('Выход из программы прошел успешно!')
             break
 
@@ -171,6 +176,37 @@ def sorting_anime():
 
     print('Сортировка прошла успешно!')
 
+
+def filter_anime():
+    with open('anime.json', mode='r', encoding='utf-8') as file:
+        anime_list = json.load(file)
+
+    print('1. Оценка')
+    print('2. Статус')
+    choice = input('По какому критерию фильтровать: ')
+
+    if choice == '1':
+        rating_threshold = float(input('Введите минимальную оценку: '))
+        filtered_list = list(filter(lambda x: x['personal_rating'] >= rating_threshold, anime_list))
+    elif choice == '2':
+        status_filter = input('Введите статус для фильтрации: ')
+        filtered_list = list(filter(lambda x: x['status'].lower() == status_filter.lower(), anime_list))
+    else:
+        print('Некорректный выбор критерия фильтрации!')
+        return
+
+
+    for anime in filtered_list:
+        print('-----------')
+        print(anime['title'])
+        print(anime['personal_rating'])
+        print(anime['status'])
+        print(anime['review'])
+    print('-----------')
+
+    print('Фильтрация прошла успешно!')
+
+        
 def show_menu():
     print('----------')
     print('Меню: ')
@@ -178,9 +214,10 @@ def show_menu():
     print('2. Удалить')
     print('3. Поиск')
     print('4. Сортировка')
-    print('5. Изменить')
-    print('6. Посмотреть')
-    print('7. Выход')
+    print('5. Фильтрация')
+    print('6. Изменить')
+    print('7. Посмотреть')
+    print('8. Выход')
     print('----------')
     print()
 
