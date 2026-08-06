@@ -1,11 +1,5 @@
 [
   {
-    "title": "Блич",
-    "personal_rating": 8.5,
-    "status": "Просмотрено",
-    "review": "Неплохой сенен, жду ласт сезон"
-  },
-  {
     "title": "Золотая пора",
     "personal_rating": 10.0,
     "status": "Просмотрено",
@@ -15,6 +9,30 @@
     "title": "Торадора!",
     "personal_rating": 9.0,
     "status": "Просмотрено",
-    "review": "Хорошая романтика"
+    "review": "лучшее"
+  },
+  {
+    "title": "Внук мудреца",
+    "personal_rating": 7.0,
+    "status": "Просмотрено",
+    "review": "один из первых иссекаев"
+  },
+  {
+    "title": "Наруто",
+    "personal_rating": 8.5,
+    "status": "Просмотрено",
+    "review": "кайфы"
+  },
+  {
+    "title": "Токийский гуль",
+    "status": "Просмотрено",
+    "personal_rating": "",
+    "review": ""
+  },
+  {
+    "title": "ре:зеро",
+    "status": "Просмотрено",
+    "personal_rating": "",
+    "review": ""
   }
 ]
