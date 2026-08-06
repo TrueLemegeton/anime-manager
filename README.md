@@ -63,7 +63,7 @@ git clone <repository_url>
 Navigate to the project folder:
 
 ```bash
-cd Anime-manager
+cd Anime manager
 ```
 
 Install dependencies:
